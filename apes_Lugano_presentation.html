@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APES Football Intelligence - Exclusive Report for FC Lugano</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, #000000 0%, #333333 100%);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 3px solid #ffffff;
+        }
+        
+        .logo {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        
+        .tagline {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            color: #cccccc;
+            font-weight: 300;
+        }
+        
+        .lugano-badge {
+            background: #ffffff;
+            color: #000000;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 700;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+            }
+            .container {
+                padding: 2rem;
+            }
+            .section {
+                padding: 2rem;
+            }
+        }
+        
+        .card {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid #333333;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.1);
+            border-color: #ffffff;
+        }
+        
+        .player-premium {
+            grid-column: 1 / -1;
+            border: 2px solid #ffffff;
+        }
+        
+        .player-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (min-width: 480px) {
+            .player-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+        }
+        
+        .player-name {
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .player-value {
+            background: linear-gradient(45deg, #ffffff, #cccccc);
+            color: #000000;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            align-self: flex-start;
+        }
+        
+        .player-details {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        @media (min-width: 480px) {
+            .player-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .player-details {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            border-left: 3px solid #ffffff;
+        }
+        
+        .detail-label {
+            color: #cccccc;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .detail-value {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+        
+        .lugano-recommendation {
+            background: linear-gradient(45deg, #ffffff, #000000);
+            color: #000000;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .tech-features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .tech-features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .feature {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ffffff;
+        }
+        
+        .feature-title {
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .feature p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #cccccc;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        
+        @media (min-width: 768px) {
+            .metrics {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .metric {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #333333;
+        }
+        
+        .metric-value {
+            font-size: clamp(1.3rem, 5vw, 2rem);
+            font-weight: 800;
+            color: #ffffff;
+            display: block;
+        }
+        
+        .metric-label {
+            color: #cccccc;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        .status-high { background: #28a745; }
+        .status-medium { background: #ffc107; }
+        .status-low { background: #dc3545; }
+        
+        .lugano-cta {
+            background: linear-gradient(135deg, #000000 0%, #ffffff 100%);
+            color: #000000;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+        }
+        
+        .cta-button {
+            background: #000000;
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border: 2px solid #ffffff;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background: #ffffff;
+            color: #000000;
+        }
+        
+        .timeline {
+            position: relative;
+            margin: 1rem 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 0.9rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 0.5rem;
+            bottom: -1rem;
+            width: 2px;
+            background: #333333;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        @media (min-width: 768px) {
+            .pros-cons {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .pros-cons > div {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .pros-cons > div:last-child {
+            border-left-color: #ffc107;
+        }
+        
+        .pros-cons ul {
+            margin-left: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .pros-cons li {
+            margin-bottom: 0.3rem;
+            color: #cccccc;
+        }
+        
+        .swiss-highlight {
+            background: linear-gradient(45deg, #ff0000, rgba(255, 255, 255, 0.1));
+            border: 2px solid #ffffff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            color: #ffffff;
+        }
+        
+        .conference-badge {
+            background: #ffc107;
+            color: #000000;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">🎯 APES Football Intelligence</div>
+        <div class="tagline">Automated Player Evaluation & Scouting System</div>
+        <div class="lugano-badge">EXCLUSIVE REPORT FOR FC LUGANO</div>
+    </div>
+    
+    <div class="container">
+        <!-- Executive Summary Lugano-Specific -->
+        <div class="section">
+            <h2 class="section-title">📋 Executive Summary - FC Lugano</h2>
+            <div class="swiss-highlight">
+                <strong>🏆 Strategic Context:</strong> Con la qualificazione Europa League e l'AIL Arena in costruzione, FC Lugano si prepara per una nuova era. APES identifica talenti European-ready per competere ai massimi livelli.
+                <span class="conference-badge">CONFERENCE LEAGUE QUALIFIED</span>
+            </div>
+            
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-value">€3M-12M</div>
+                    <div class="metric-label">Budget Range Targets</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">UEFA</div>
+                    <div class="metric-label">Competition Ready</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">2026</div>
+                    <div class="metric-label">AIL Arena Ready</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">3x ROI</div>
+                    <div class="metric-label">Target Return</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Target Priority: Bence Dárdai - Lugano Focused -->
+        <div class="section">
+            <h2 class="section-title">🌟 Target Prioritario FC Lugano</h2>
+            
+            <div class="grid">
+                <div class="card player-premium">
+                    <div class="player-header">
+                        <div>
+                            <div class="player-name">⭐ Bence Dárdai</div>
+                            <div style="color: #ffffff; font-weight: 600;">EUROPEAN PROVEN - SWISS LEAGUE PERFECT FIT</div>
+                        </div>
+                        <div class="player-value">€9.0M Investment</div>
+                    </div>
+                    
+                    <div class="swiss-highlight">
+                        <strong>🇨🇭 Lugano Strategy:</strong> Profilo ideale per la Super League: esperienza europea, mentalità vincente, età perfetta per crescere con il progetto AIL Arena e diventare il leader tecnico della squadra.
+                    </div>
+                    
+                    <div class="player-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Età</span>
+                            <span class="detail-value">19 anni (2006)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Experience</span>
+                            <span class="detail-value">Bundesliga Proven</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Position</span>
+                            <span class="detail-value">Regista/Box-to-Box</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">UEFA Experience</span>
+                            <span class="detail-value">Youth International</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">2024/25 Season</span>
+                            <span class="detail-value">21 Apps (16 Starts)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Market Interest</span>
+                            <span class="detail-value">EPL + Serie A</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>2023:</strong> European Champion U17 (Germany) - Match-winning penalty
+                        </div>
+                        <div class="timeline-item">
+                            <strong>2024:</strong> Free transfer Hertha → Wolfsburg (smart business)
+                        </div>
+                        <div class="timeline-item">
+                            <strong>2025:</strong> Bundesliga regular, top club interest rising
+                        </div>
+                        <div class="timeline-item">
+                            <strong>2025/26:</strong> <strong style="color: #ffffff;">Perfect timing for Lugano move</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="pros-cons">
+                        <div>
+                            <strong style="color: #28a745;">✅ Lugano Perfect Match:</strong>
+                            <ul>
+                                <li>European competition experience ready</li>
+                                <li>Technical quality ideal for Swiss football</li>
+                                <li>Leadership potential for young squad</li>
+                                <li>Marketing appeal for international growth</li>
+                                <li>AIL Arena flagship signing potential</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: #ffc107;">⚠️ Competition & Challenges:</strong>
+                            <ul>
+                                <li>Rising valuation (€9M trending up)</li>
+                                <li>Premier League interest intensifying</li>
+                                <li>Wolfsburg contract until 2027</li>
+                                <li>Significant investment for Swiss club</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="lugano-recommendation">
+                        <span class="status-indicator status-high"></span>
+                        <strong>LUGANO STRATEGY:</strong> Prime target for summer 2025 before European explosion. Perfect profile for Super League domination and Europe League ambitions. Investment: €9M → Potential €20M+ in 2-3 years with AIL Arena premium.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- APES Technology for Lugano -->
+        <div class="section">
+            <h2 class="section-title">🤖 APES Technology - Lugano Advantage</h2>
+            <div class="tech-features">
+                <div class="feature">
+                    <div class="feature-title">Swiss Market Intelligence</div>
+                    <p>Monitoring specifico Super League e campionati europei mid-tier per identificare talenti European-proven ma sottovalutati dai top club.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">Budget Optimization</div>
+                    <p>Algoritmi per club ambiziosi con budget controllato: massimo ROI attraverso timing perfetto e valutazioni pre-mainstream explosion.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">European Readiness</div>
+                    <p>Focus su profili con mentalità UEFA, esperienza competizioni internazionali e capacità di impatto immediato in Conference/Europa League.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">AIL Arena Vision</div>
+                    <p>Identificazione flagship signings per la nuova era Lugano: giocatori che possano diventare simboli del progetto e attrazioni per i tifosi.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Value Proposition Lugano -->
+        <div class="section">
+            <h2 class="section-title">💎 Valore Strategico per FC Lugano</h2>
+            
+            <div class="grid">
+                <div class="feature">
+                    <div class="feature-title">European Competitive Edge</div>
+                    <p>Identificazione talenti European-ready prima della concorrenza, sfruttando il timing perfetto pre-AIL Arena opening.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">Smart Investment Strategy</div>
+                    <p>Focus su profili con potenziale 3x ROI compatibile con budget Swiss club ma ambizioni europee illimitate.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">Super League Domination</div>
+                    <p>Target per dominare la Super League e competere con Young Boys, Basel, Servette attraverso scouting di livello superiore.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">International Growth</div>
+                    <p>Supporto alla strategia di crescita internazionale con profili che attraggano attenzione mediatica e sponsor globali.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pipeline Lugano Specific -->
+        <div class="section">
+            <h2 class="section-title">🔍 Pipeline FC Lugano</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <div class="player-header">
+                        <div class="player-name">Target Budget-Conscious</div>
+                    </div>
+                    
+                    <div style="color: #cccccc; margin: 1rem 0;">
+                        <div style="margin-bottom: 0.5rem;">
+                            <span class="status-indicator status-high"></span>
+                            <strong>Serie B Italian Gems</strong> - 3 under-21 talents €2-5M range
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <span class="status-indicator status-medium"></span>
+                            <strong>Swiss Prospects</strong> - 2 domestic talents for depth
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <span class="status-indicator status-high"></span>
+                            <strong>Free Transfers 2025</strong> - 4 European players available
+                        </div>
+                    </div>
+                    
+                    <div class="swiss-highlight">
+                        <strong>Lugano Strategy:</strong> Portfolio bilanciato con 1 flagship signing (Dárdai) + 2-3 alternative smart investments per costruire squadra UEFA-competitive con budget sostenibile.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="player-name" style="margin-bottom: 1rem;">Super League Intelligence</div>
+                    
+                    <div style="background: rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 8px; border-left: 4px solid #ffffff;">
+                        <strong>Competitive Monitoring:</strong>
+                        <ul style="margin-left: 1rem; margin-top: 0.5rem; color: #cccccc;">
+                            <li>Young Boys, Basel, Servette target tracking</li>
+                            <li>Serie A/Bundesliga loan opportunities</li>
+                            <li>Conference League opponent analysis</li>
+                            <li>Swiss international prospects monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action Lugano -->
+        <div class="lugano-cta">
+            <h2 style="margin-bottom: 1rem; color: #000000;">🎯 Partnership Strategica FC Lugano</h2>
+            <p style="font-size: 1rem; margin-bottom: 1rem; color: #000000;">
+                APES può diventare l'intelligence europea di FC Lugano per conquistare nuovi traguardi.<br>
+                <strong>Investimento smart, ambizioni internazionali.</strong>
+            </p>
+            <div style="background: rgba(0, 0, 0, 0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0; color: #000000;">
+                <strong>🇨🇭 Demo Personalizzata Include:</strong><br>
+                • Analisi completa Bence Dárdai + alternative budget<br>
+                • Target specifici €3M-€12M range<br>
+                • Monitoring Super League competitors<br>
+                • Free transfer opportunities 2025<br>
+                • Swiss youth prospects evaluation
+            </div>
+            <button class="cta-button">📧 Richiedi Demo Esclusiva Lugano</button>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem; padding: 1rem; border-top: 2px solid #333333; color: #cccccc;">
+            <p><strong>APES Football Intelligence</strong> - Exclusive Report for FC Lugano</p>
+            <p>Automated Player Evaluation & Scouting System</p>
+            <p style="color: #ffffff; font-weight: 600;">🏆 "European Dreams, Swiss Precision"</p>
+        </div>
+    </div>
+</body>
+</html>
