@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APES Football Intelligence - Exclusive Report for Como 1907</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #001f3f 0%, #003d7a 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, #004b8d 0%, #0066cc 100%);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid #ff6b35;
+        }
+        
+        .logo {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tagline {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            color: #b3d9ff;
+            font-weight: 300;
+        }
+        
+        .como-badge {
+            background: #ff6b35;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 700;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+            }
+            .container {
+                padding: 2rem;
+            }
+            .section {
+                padding: 2rem;
+            }
+        }
+        
+        .card {
+            background: rgba(0, 31, 63, 0.8);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid #0066cc;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.2);
+            border-color: #ff6b35;
+        }
+        
+        .player-premium {
+            grid-column: 1 / -1;
+            border: 2px solid #ff6b35;
+        }
+        
+        .player-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (min-width: 480px) {
+            .player-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+        }
+        
+        .player-name {
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .player-value {
+            background: linear-gradient(45deg, #ff6b35, #e55a2b);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            align-self: flex-start;
+        }
+        
+        .player-details {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        @media (min-width: 480px) {
+            .player-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .player-details {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            background: rgba(0, 102, 204, 0.2);
+            border-radius: 6px;
+            border-left: 3px solid #ff6b35;
+        }
+        
+        .detail-label {
+            color: #b3d9ff;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .detail-value {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+        
+        .como-recommendation {
+            background: linear-gradient(45deg, #ff6b35, #004b8d);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .tech-features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .tech-features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .feature {
+            background: rgba(0, 31, 63, 0.6);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b35;
+        }
+        
+        .feature-title {
+            color: #ff6b35;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .feature p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #e6f3ff;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        
+        @media (min-width: 768px) {
+            .metrics {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .metric {
+            background: rgba(0, 31, 63, 0.8);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #0066cc;
+        }
+        
+        .metric-value {
+            font-size: clamp(1.3rem, 5vw, 2rem);
+            font-weight: 800;
+            color: #ff6b35;
+            display: block;
+        }
+        
+        .metric-label {
+            color: #b3d9ff;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        .status-high { background: #28a745; }
+        .status-medium { background: #ffc107; }
+        .status-low { background: #dc3545; }
+        
+        .como-cta {
+            background: linear-gradient(135deg, #ff6b35 0%, #004b8d 100%);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #004b8d;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .timeline {
+            position: relative;
+            margin: 1rem 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 0.9rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: #ff6b35;
+            border-radius: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 0.5rem;
+            bottom: -1rem;
+            width: 2px;
+            background: #0066cc;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        @media (min-width: 768px) {
+            .pros-cons {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .pros-cons > div {
+            background: rgba(0, 102, 204, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .pros-cons > div:last-child {
+            border-left-color: #ffc107;
+        }
+        
+        .pros-cons ul {
+            margin-left: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .pros-cons li {
+            margin-bottom: 0.3rem;
+            color: #e6f3ff;
+        }
+        
+        .fabregas-highlight {
+            background: linear-gradient(45deg, #ff6b35, rgba(255, 255, 255, 0.1));
+            border: 2px solid #ff6b35;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">🎯 APES Football Intelligence</div>
+        <div class="tagline">Automated Player Evaluation & Scouting System</div>
+        <div class="como-badge">EXCLUSIVE REPORT FOR COMO 1907</div>
+    </div>
+    
+    <div class="container">
+        <!-- Executive Summary Como-Specific -->
+        <div class="section">
+            <h2 class="section-title">📋 Executive Summary - Como 1907</h2>
+            <div class="fabregas-highlight">
+                <strong>Strategic Context:</strong> Con Fàbregas alla guida tecnica e gli Hartono Brothers come proprietà, Como 1907 rappresenta l'eccellenza nella valorizzazione di giovani talenti tecnici. APES ha identificato profili perfettamente allineati con questa filosofia vincente.
+            </div>
+            
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-value">15,000+</div>
+                    <div class="metric-label">Profili Analizzati</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">89%</div>
+                    <div class="metric-label">Accuracy Rate</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">€25M+</div>
+                    <div class="metric-label">ROI Potenziale</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">Serie A</div>
+                    <div class="metric-label">Ready Players</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Target Priority: Bence Dárdai - Como Focused -->
+        <div class="section">
+            <h2 class="section-title">🌟 Target Prioritario Como 1907</h2>
+            
+            <div class="grid">
+                <div class="card player-premium">
+                    <div class="player-header">
+                        <div>
+                            <div class="player-name">⭐ Bence Dárdai</div>
+                            <div style="color: #ff6b35; font-weight: 600;">PERFECT FIT FOR FÀBREGAS SYSTEM</div>
+                        </div>
+                        <div class="player-value">€9.0M → €25M+</div>
+                    </div>
+                    
+                    <div class="fabregas-highlight">
+                        <strong>🎯 Fàbregas Connection:</strong> Regista puro con visione di gioco e tecnica sopraffina. Il profilo ideale per crescere sotto la guida del Maestro catalano e diventare il fulcro del centrocampo Como.
+                    </div>
+                    
+                    <div class="player-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Età</span>
+                            <span class="detail-value">19 anni (2006)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Club Attuale</span>
+                            <span class="detail-value">VfL Wolfsburg</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Ruolo</span>
+                            <span class="detail-value">Regista/Mezzala</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Nazionalità</span>
+                            <span class="detail-value">Ungherese (Germania U17)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Bundesliga 24/25</span>
+                            <span class="detail-value">21 (16 titolare)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Performance</span>
+                            <span class="detail-value">1 gol + 1 assist</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>2023:</strong> Campione Europeo U17 con Germania (penalty decisivo)
+                        </div>
+                        <div class="timeline-item">
+                            <strong>2024:</strong> Trasferimento Hertha → Wolfsburg (parametro zero)
+                        </div>
+                        <div class="timeline-item">
+                            <strong>2025:</strong> Titolare fisso Bundesliga, interesse Chelsea/Liverpool/ManU
+                        </div>
+                        <div class="timeline-item">
+                            <strong>2026?:</strong> <strong style="color: #ff6b35;">Opportunità Como 1907</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="pros-cons">
+                        <div>
+                            <strong style="color: #28a745;">✅ Perfect Como DNA:</strong>
+                            <ul>
+                                <li>Pedigree familiare eccezionale (Pál Dárdai)</li>
+                                <li>Mentalità europea, abituato a pressioni</li>
+                                <li>Tecnica raffinata, visione di gioco superiore</li>
+                                <li>Età ideale per crescere con Fàbregas</li>
+                                <li>Marketing value internazionale</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: #ffc107;">⚠️ Sfide da Considerare:</strong>
+                            <ul>
+                                <li>Valutazione in crescita rapida</li>
+                                <li>Interesse concorrenza top europea</li>
+                                <li>Contratto lungo con Wolfsburg</li>
+                                <li>Investimento significativo (€9M+)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="como-recommendation">
+                        <span class="status-indicator status-high"></span>
+                        <strong>RACCOMANDAZIONE COMO:</strong> Target numero 1 per estate 2025/2026. Profilo perfetto per il progetto tecnico Fàbregas e la vision Hartono. ROI garantito: €9M oggi, potenziale €25M+ in 2-3 anni. Monitoraggio intensivo raccomandato.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- APES Technology for Como -->
+        <div class="section">
+            <h2 class="section-title">🤖 APES Technology - Vantaggio Como</h2>
+            <div class="tech-features">
+                <div class="feature">
+                    <div class="feature-title">Serie A Intelligence</div>
+                    <p>Monitoraggio specifico giovani talenti Serie A-ready, con focus su profili tecnici compatibili con il sistema Fàbregas e le ambizioni europee di Como.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">ROI Optimization</div>
+                    <p>Algoritmi specifici per la proprietà Hartono: identificazione talenti con potenziale 3x ROI in 24-36 mesi, bilanciando performance immediata e crescita futura.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">European Scouting</div>
+                    <p>Rete di intelligence su campionati europei per identificare profili internazionali che possano crescere in Serie A e competere in Europa.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">Fàbregas System Match</div>
+                    <p>Analisi tattica avanzata per identificare giocatori compatibili con il gioco di possesso e la filosofia tecnica del Maestro catalano.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Value Proposition Como -->
+        <div class="section">
+            <h2 class="section-title">💎 Valore Strategico per Como 1907</h2>
+            
+            <div class="grid">
+                <div class="feature">
+                    <div class="feature-title">First-Mover Advantage</div>
+                    <p>Identificazione precoce di talenti prima che entrino nel radar dei grandi club europei, sfruttando il potere economico degli Hartono Brothers.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">Serie A Competitiveness</div>
+                    <p>Focus su profili immediatamente competitivi in Serie A, evitando il rischio di investimenti su talenti non ancora pronti per il massimo livello.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">International Network</div>
+                    <p>Scouting globale per alimentare la crescita internazionale di Como, identificando talenti da mercati emergenti e consolidati.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">Technical Philosophy</div>
+                    <p>Allineamento con la vision Fàbregas: giocatori tecnici, intelligenti, con mentalità europea e capacità di crescita esponenziale.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pipeline Como Specific -->
+        <div class="section">
+            <h2 class="section-title">🔍 Pipeline Como 1907</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <div class="player-header">
+                        <div class="player-name">Target Secondari</div>
+                    </div>
+                    
+                    <div style="color: #e6f3ff; margin: 1rem 0;">
+                        <div style="margin-bottom: 0.5rem;">
+                            <span class="status-indicator status-medium"></span>
+                            <strong>Luca Di Maggio</strong> (Perugia, Serie C) - Centrocampista tecnico
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <span class="status-indicator status-medium"></span>
+                            <strong>Profili Serie B</strong> - 3 registi under 21 identificati
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <span class="status-indicator status-high"></span>
+                            <strong>European Targets</strong> - 5 talenti Bundesliga/Ligue 1
+                        </div>
+                    </div>
+                    
+                    <div class="fabregas-highlight">
+                        <strong>Strategia Como:</strong> Portfolio diversificato con 1 target premium (Dárdai) + 3-4 alternative più economiche per completare la rosa con profili Fàbregas-compatible.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="player-name" style="margin-bottom: 1rem;">Competitive Intelligence</div>
+                    
+                    <div style="background: rgba(0, 102, 204, 0.2); padding: 1rem; border-radius: 8px; border-left: 4px solid #ff6b35;">
+                        <strong>Monitoring Attivo:</strong>
+                        <ul style="margin-left: 1rem; margin-top: 0.5rem; color: #e6f3ff;">
+                            <li>Movimenti mercato Atalanta, Fiorentina, Bologna</li>
+                            <li>Target condivisi con club Premier League</li>
+                            <li>Opportunità parametro zero estate 2025</li>
+                            <li>Giovani talenti Serie A in scadenza</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action Como -->
+        <div class="como-cta">
+            <h2 style="margin-bottom: 1rem;">🎯 Partnership Strategica Como 1907</h2>
+            <p style="font-size: 1rem; margin-bottom: 1rem;">
+                APES può diventare l'intelligence digitale di Como 1907 per conquistare l'Europa.<br>
+                <strong>Investimento tecnologico, risultati da grande club.</strong>
+            </p>
+            <div style="background: rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                <strong>🎯 Demo Personalizzata Include:</strong><br>
+                • Analisi completa Bence Dárdai + 3 alternative<br>
+                • Target specifici budget Como (€5M-€15M)<br>
+                • Monitoring competitor Serie A<br>
+                • Integration con scouting Christian Bruccoleri
+            </div>
+            <button class="cta-button">📧 Richiedi Demo Esclusiva Como</button>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem; padding: 1rem; border-top: 2px solid #0066cc; color: #b3d9ff;">
+            <p><strong>APES Football Intelligence</strong> - Exclusive Report for Como 1907</p>
+            <p>Automated Player Evaluation & Scouting System</p>
+            <p style="color: #ff6b35; font-weight: 600;">🏆 "Building Champions, One Discovery at a Time"</p>
+        </div>
+    </div>
+</body>
+</html>
