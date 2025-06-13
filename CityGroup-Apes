@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APES & Sócrates - City Football Group</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .slides-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scrollbar-width: none;
+        }
+
+        .slides-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slide {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            scroll-snap-align: start;
+            position: relative;
+            text-align: center;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            opacity: 0.3;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            line-height: 1.6;
+            max-width: 800px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .highlight {
+            color: #00ff88;
+            font-weight: 500;
+        }
+
+        .accent {
+            color: #00aaff;
+        }
+
+        /* Slide 1 - Opening */
+        .slide1 {
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        .slide1 h1 {
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Slide 2 - APES */
+        .slide2 {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        .network-visual {
+            width: 300px;
+            height: 300px;
+            margin: 30px 0;
+            position: relative;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .network-visual::before {
+            content: 'APES';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
+            font-weight: 800;
+            color: #00ff88;
+        }
+
+        .network-visual::after {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            border: 2px solid #00ff88;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Slide 3 - Impact */
+        .impact-list {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .impact-list li {
+            list-style: none;
+            margin: 20px 0;
+            padding-left: 40px;
+            position: relative;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            line-height: 1.6;
+        }
+
+        .impact-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-size: 24px;
+        }
+
+        /* Slide 4 - Open Source */
+        .graph-container {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            margin: 30px 0;
+            position: relative;
+            border-left: 2px solid #333;
+            border-bottom: 2px solid #333;
+        }
+
+        .curve {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .curve-open {
+            background: linear-gradient(transparent, rgba(0, 255, 136, 0.1));
+            clip-path: polygon(0 100%, 0 90%, 20% 85%, 40% 70%, 60% 40%, 80% 15%, 100% 0%, 100% 100%);
+            border-top: 3px solid #00ff88;
+        }
+
+        .curve-closed {
+            background: linear-gradient(transparent, rgba(255, 255, 255, 0.05));
+            clip-path: polygon(0 100%, 0 70%, 100% 40%, 100% 100%);
+            border-top: 3px dashed #666;
+        }
+
+        /* Slide 5 - AI Collaboration */
+        .code-preview {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            max-width: 700px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-preview::before {
+            content: 'APES OUTPUT';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 10px;
+            color: #00ff88;
+            opacity: 0.5;
+            letter-spacing: 2px;
+        }
+
+        .code-line {
+            margin: 5px 0;
+            color: #aaa;
+        }
+
+        .code-key {
+            color: #00aaff;
+        }
+
+        .code-value {
+            color: #00ff88;
+        }
+
+        /* Slide 6 - Socrates */
+        .neural-network {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #00aaff;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Slide 7 - CTA */
+        .terminal {
+            background: #000;
+            border: 2px solid #00ff88;
+            padding: 30px;
+            margin: 30px 0;
+            font-family: 'Monaco', monospace;
+            font-size: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .terminal::after {
+            content: '_';
+            animation: blink 1s steps(2) infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Slide 8 - Contact */
+        .contact-info {
+            margin: 30px 0;
+        }
+
+        .contact-info a {
+            color: #00ff88;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: #00aaff;
+            transform: translateX(10px);
+        }
+
+        .tagline {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-style: italic;
+            opacity: 0.8;
+            margin-top: 50px;
+        }
+
+        /* Navigation */
+        .nav-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.5;
+            font-size: 12px;
+            letter-spacing: 2px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+            
+            .network-visual,
+            .neural-network {
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+        <!-- Slide 1: Opening -->
+        <div class="slide slide1">
+            <span class="slide-number">01/08</span>
+            <h1>"Football's last black box just got hacked."</h1>
+            <p>We're not building another analytics tool.<br>We're open-sourcing the future of football intelligence.</p>
+        </div>
+
+        <!-- Slide 2: APES -->
+        <div class="slide slide2">
+            <span class="slide-number">02/08</span>
+            <h2>APES: Predictive Scouting, <span class="highlight">Unchained</span></h2>
+            <div class="network-visual"></div>
+            <p>An open-source scouting system that learns, adapts, and evolves with your vision. No vendor lock-in. No proprietary algorithms. Just pure, hackable intelligence that grows with your ambitions.</p>
+        </div>
+
+        <!-- Slide 3: Impact -->
+        <div class="slide">
+            <span class="slide-number">03/08</span>
+            <h2>Three Ways APES Changes <span class="accent">Your Game</span></h2>
+            <ul class="impact-list">
+                <li><strong>Cross-pollinate talent insights</strong> between NYC, Manchester, Melbourne - one system, infinite perspectives</li>
+                <li><strong>Build custom models</strong> for each club's DNA while sharing core intelligence</li>
+                <li><strong>Community-driven evolution</strong> - your scouts improve the tool, the tool improves global scouting</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Open Source -->
+        <div class="slide">
+            <span class="slide-number">04/08</span>
+            <h2>Open Source = <span class="highlight">Infinite Evolution</span></h2>
+            <div class="graph-container">
+                <div class="curve curve-closed"></div>
+                <div class="curve curve-open"></div>
+            </div>
+            <p>Closed systems plateau. Open systems explode. When your competitors wait for vendor updates, you're already three iterations ahead.</p>
+        </div>
+
+        <!-- Slide 5: AI Collaboration -->
+        <div class="slide">
+            <span class="slide-number">05/08</span>
+            <h2>Built <span class="accent">WITH</span> Intelligence, Not Just BY It</h2>
+            <p>First scouting platform born from human-AI collaboration</p>
+            <div class="code-preview">
+                <div class="code-line"><span class="code-key">APES INSIGHT</span> <span class="code-value">#CF2024-1337</span></div>
+                <div class="code-line"><span class="code-key">Player:</span> [Encrypted] | <span class="code-key">League:</span> Serie C</div>
+                <div class="code-line"><span class="code-key">Hidden Gem Score:</span> <span class="code-value">92.1%</span></div>
+                <div class="code-line"><span class="code-key">Pattern Match:</span> Haaland (2019) + Lewandowski (2012)</div>
+                <div class="code-line"><span class="code-key">ROI Projection:</span> <span class="code-value">1,956%</span> (24 months)</div>
+            </div>
+        </div>
+
+        <!-- Slide 6: The Truth -->
+        <div class="slide">
+            <span class="slide-number">06/09</span>
+            <h2>The Truth About <span class="highlight">APES</span></h2>
+            <div class="code-preview" style="border-color: #ff4444;">
+                <div class="code-line"><span class="code-key">Status:</span> <span style="color: #ff4444;">IMPERFECT BY DESIGN</span></div>
+                <div class="code-line"><span class="code-key">False Positives:</span> Yes. They're features.</div>
+                <div class="code-line"><span class="code-key">Built on:</span> Ancient laptop in San Marino</div>
+                <div class="code-line"><span class="code-key">Budget:</span> <span class="code-value">€0</span></div>
+                <div class="code-line"><span class="code-key">Why it works:</span> Perfect systems create lazy scouts.</div>
+                <div class="code-line" style="margin-top: 15px;"><span class="code-value">Imperfect systems create thinking scouts.</span></div>
+            </div>
+            <p style="margin-top: 30px;"><strong>Next Phase:</strong> Multi-agent orchestration.<br>
+            Gemini + Claude + GPT-4 + Human Intelligence.<br>
+            <span class="accent">Imagine what we could build WITH resources.</span></p>
+        </div>
+
+        <!-- Slide 7: Socrates -->
+        <div class="slide">
+            <span class="slide-number">07/09</span>
+            <h2>Introducing <span class="highlight">Sócrates</span></h2>
+            <h3>Next Frontier: Cognitive Game Analysis</h3>
+            <div class="neural-network">
+                <div class="node" style="top: 50%; left: 50%;"></div>
+                <div class="node" style="top: 20%; left: 30%; animation-delay: 0.5s;"></div>
+                <div class="node" style="top: 20%; left: 70%; animation-delay: 1s;"></div>
+                <div class="node" style="top: 80%; left: 30%; animation-delay: 1.5s;"></div>
+                <div class="node" style="top: 80%; left: 70%; animation-delay: 2s;"></div>
+                <div class="node" style="top: 50%; left: 10%; animation-delay: 2.5s;"></div>
+                <div class="node" style="top: 50%; left: 90%; animation-delay: 3s;"></div>
+            </div>
+            <p>Pattern recognition beyond human limits.<br>Tactical evolution in real-time. Coming 2025.</p>
+        </div>
+
+        <!-- Slide 8: CTA -->
+        <div class="slide">
+            <span class="slide-number">08/09</span>
+            <h2>"We're not selling you software.<br>We're inviting you to <span class="highlight">rewrite football's source code.</span>"</h2>
+            <div class="terminal">
+                FOOTBALL:// REINVENT? Y/N
+            </div>
+            <p>No demos. No meetings. Just a simple question: Ready to build the impossible?</p>
+            <p style="margin-top: 40px; font-size: 16px; opacity: 0.7;">
+                <span class="accent">Perfect for Palermo:</span> Where every € counts and finding diamonds matters most.<br>
+                RMI/BLQ → PMO: 90 minutes. Close enough to iterate, far enough to innovate.
+            </p>
+        </div>
+
+        <!-- Slide 9: Contact -->
+        <div class="slide">
+            <span class="slide-number">09/09</span>
+            <h3>Mirko Tornani</h3>
+            <p style="opacity: 0.7;">Football Rebel, Tool Builder</p>
+            <div class="contact-info">
+                <a href="mailto:mirkotornani@gmail.com">📧 mirkotornani@gmail.com</a>
+                <a href="tel:+393398978738">📱 +39 339 897 8738</a>
+                <a href="https://www.linkedin.com/in/mirkotornani" target="_blank">💼 linkedin.com/in/mirkotornani</a>
+            </div>
+            <p class="tagline">"The beautiful game deserves beautiful code."</p>
+            <p style="font-size: 14px; opacity: 0.5; margin-top: 30px;">(San Marino – inspired by Da Vinci, Cruyff, Banksy)</p>
+        </div>
+    </div>
+    
+    <div class="nav-hint">SCROLL TO NAVIGATE ↓</div>
+
+    <script>
+        // Hide nav hint after first scroll
+        let hasScrolled = false;
+        document.querySelector('.slides-container').addEventListener('scroll', () => {
+            if (!hasScrolled) {
+                hasScrolled = true;
+                document.querySelector('.nav-hint').style.opacity = '0';
+            }
+        });
+
+        // Add dynamic nodes to neural network
+        const network = document.querySelector('.neural-network');
+        if (network) {
+            for (let i = 0; i < 20; i++) {
+                const node = document.createElement('div');
+                node.className = 'node';
+                node.style.width = Math.random() * 5 + 5 + 'px';
+                node.style.height = node.style.width;
+                node.style.top = Math.random() * 100 + '%';
+                node.style.left = Math.random() * 100 + '%';
+                node.style.animationDelay = Math.random() * 6 + 's';
+                node.style.opacity = Math.random() * 0.5 + 0.3;
+                network.appendChild(node);
+            }
+        }
+    </script>
+</body>
+</html>
