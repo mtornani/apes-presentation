@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APES Case Study: The Dárdai Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .apes-logo {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            margin: 40px 0 20px;
+            color: #00ff88;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: #00aaff;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        .query-box {
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .query-box::before {
+            content: 'LIVE QUERY';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 10px;
+            color: #ff4444;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .result-box {
+            background: #000;
+            border: 2px solid #ff4444;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            position: relative;
+            animation: pulse-border 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { border-color: #ff4444; }
+            50% { border-color: #ff6666; }
+        }
+
+        .code {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+
+        .code-comment {
+            color: #666;
+        }
+
+        .code-keyword {
+            color: #00aaff;
+        }
+
+        .code-string {
+            color: #00ff88;
+        }
+
+        .code-function {
+            color: #ffaa00;
+        }
+
+        .truth-section {
+            background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 50px 0;
+            border: 1px solid #222;
+        }
+
+        .player-card {
+            background: #111;
+            border: 2px solid #00ff88;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            display: grid;
+            gap: 15px;
+        }
+
+        .player-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .player-stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #888;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            color: #00ff88;
+            font-weight: 600;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            padding: 15px 0;
+            padding-left: 40px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .feature-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .highlight {
+            color: #00ff88;
+            font-weight: 600;
+        }
+
+        .accent {
+            color: #00aaff;
+            font-weight: 600;
+        }
+
+        .warning {
+            color: #ff4444;
+            font-weight: 600;
+        }
+
+        .bottom-line {
+            background: #000;
+            border: 3px solid #00ff88;
+            border-radius: 16px;
+            padding: 40px;
+            margin: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bottom-line::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,255,136,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .bottom-line h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bottom-line p {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ps-note {
+            margin-top: 60px;
+            padding: 30px;
+            background: linear-gradient(135deg, transparent, rgba(0,255,136,0.05));
+            border-left: 3px solid #00ff88;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        .vs-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .vs-option {
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .vs-option:hover {
+            border-color: #666;
+            transform: translateY(-5px);
+        }
+
+        .vs-option.recommended {
+            border-color: #00ff88;
+            background: linear-gradient(135deg, #111, #0f1f0f);
+        }
+
+        .tag {
+            display: inline-block;
+            background: #222;
+            border: 1px solid #444;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 5px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .vs-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .code {
+                font-size: 12px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="apes-logo">APES</div>
+            <h1>Case Study: The Dárdai Search</h1>
+            <p class="subtitle">When "Insufficient Data" Becomes a Competitive Advantage</p>
+        </header>
+
+        <section class="query-box">
+            <h2>The Query</h2>
+            <div style="margin-top: 20px;">
+                <strong>Player:</strong> <span class="highlight">Bence Dárdai</span><br>
+                <strong>Date:</strong> June 13, 2025<br>
+                <strong>Result:</strong> <span class="warning">"INSUFFICIENT DATA"</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>What Happened?</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;">APES searched for Bence Dárdai and returned this:</p>
+            
+            <div class="result-box">
+                Decision: <span class="warning">INSUFFICIENT DATA</span><br>
+                Confidence: 10.0%<br>
+                Data Coverage: Limited<br>
+                Sources Scraped: 4/10<br>
+                <br>
+                <span class="code-comment"># Most systems would hide this.</span><br>
+                <span class="code-keyword"># We celebrate it.</span>
+            </div>
+        </section>
+
+        <section class="truth-section">
+            <h2>The Real Story</h2>
+            <p style="margin-bottom: 30px;">Here's what APES couldn't find (but we know):</p>
+            
+            <div class="player-card">
+                <h3 style="margin: 0; color: #fff;">Bence Dárdai</h3>
+                <div class="player-stat">
+                    <span class="stat-label">Age</span>
+                    <span class="stat-value">19 years old (born January 24, 2006)</span>
+                </div>
+                <div class="player-stat">
+                    <span class="stat-label">Position</span>
+                    <span class="stat-value">Attacking Midfielder / Central Midfielder</span>
+                </div>
+                <div class="player-stat">
+                    <span class="stat-label">Club</span>
+                    <span class="stat-value">VfL Wolfsburg (since July 2024)</span>
+                </div>
+                <div class="player-stat">
+                    <span class="stat-label">Market Value</span>
+                    <span class="stat-value">€9.00m</span>
+                </div>
+                <div class="player-stat">
+                    <span class="stat-label">Father</span>
+                    <span class="stat-value">Pál Dárdai (Ex-Hertha legend, coach)</span>
+                </div>
+                <div class="player-stat">
+                    <span class="stat-label">International</span>
+                    <span class="stat-value">Hungary (formerly Germany youth)</span>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Why This "Failure" Matters</h2>
+            
+            <h3>1. Honest AI > Confident Lies</h3>
+            <p>APES admitted uncertainty instead of hallucinating data. In scouting, false confidence kills careers.</p>
+            
+            <h3>2. The 4/10 Problem</h3>
+            <p>Only 4 of 10 sources were accessible. This reveals:</p>
+            <ul class="feature-list">
+                <li>Data silos in football</li>
+                <li>Need for multi-agent approach</li>
+                <li>Why open systems win (community can add missing sources)</li>
+            </ul>
+            
+            <h3>3. The Human Layer</h3>
+            <p>A human scout knows: <span class="accent">"Dárdai? Check the Bundesliga youth leagues."</span><br>
+            APES flagged: <span class="highlight">"I need help here."</span><br>
+            <strong>Together:</strong> Perfect discovery.</p>
+        </section>
+
+        <section>
+            <h2>The Multi-Agent Solution (Coming)</h2>
+            <div class="code">
+                <span class="code-comment"># APES Starter (Today)</span><br>
+                <span class="code-function">single_search</span>(<span class="code-string">"Bence Dárdai"</span>) → <span class="code-string">"Need help"</span><br>
+                <br>
+                <span class="code-comment"># APES Orchestra (Tomorrow)</span><br>
+                agent_1 = <span class="code-function">gemini_broad_search</span>(<span class="code-string">"Dárdai Berlin youth"</span>)<br>
+                agent_2 = <span class="code-function">claude_pattern_match</span>(<span class="code-string">"Hungarian midfielders Germany"</span>)<br>
+                agent_3 = <span class="code-function">gpt4_deep_dive</span>(<span class="code-string">"Hertha BSC II statistics"</span>)<br>
+                human_validation = <span class="code-function">scout_confirms</span>(<span class="code-string">"Yes, track this kid"</span>)<br>
+                → <span class="highlight">Complete profile + prediction model</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>Key Takeaway</h2>
+            <div style="text-align: center; margin: 40px 0;">
+                <h3 style="font-size: 1.8rem; color: #fff;">This isn't a bug report.<br>It's a feature demonstration.</h3>
+                <p style="margin-top: 20px; font-size: 1.2rem;">
+                    Perfect systems pretend to know everything.<br>
+                    <span class="highlight">Honest systems build trust through transparency.</span>
+                </p>
+            </div>
+            
+            <p style="font-size: 1.1rem; margin: 30px 0;">When APES says "I don't know," it means:</p>
+            <ul class="feature-list">
+                <li>No wasted time on false leads</li>
+                <li>Clear signal where human expertise adds value</li>
+                <li>Foundation for collaborative intelligence</li>
+            </ul>
+        </section>
+
+        <div class="bottom-line">
+            <h3>The Bottom Line</h3>
+            <p style="margin-bottom: 30px;">Would you rather have a system that:</p>
+            
+            <div class="vs-comparison">
+                <div class="vs-option">
+                    <h4 style="color: #ff4444;">Option A</h4>
+                    <p>Confidently presents wrong data about youth players?</p>
+                </div>
+                <div class="vs-option recommended">
+                    <h4 style="color: #00ff88;">Option B</h4>
+                    <p>Admits limits and invites collaboration?</p>
+                </div>
+            </div>
+            
+            <p style="font-size: 1.4rem; margin-top: 30px;">
+                <span class="accent">City Group's global network</span> + 
+                <span class="highlight">APES' honest AI</span> = 
+                <strong>Unfair advantage</strong>
+            </p>
+        </div>
+
+        <div class="ps-note">
+            <strong>P.S.</strong> - By the way, keep an eye on Bence. Technical midfielders with €9m valuations at 19? Already at Wolfsburg proving himself in the Bundesliga? That's exactly the profile that becomes a €30m+ player in 2 years. The kind of scouting intelligence that turns clubs profitable. Like, say... <span class="highlight">Palermo</span>.
+        </div>
+
+        <footer style="text-align: center; margin-top: 80px; opacity: 0.5;">
+            <div class="tag">Open Source</div>
+            <div class="tag">Human + AI</div>
+            <div class="tag">Built in San Marino</div>
+            <div class="tag">€0 Budget</div>
+        </footer>
+    </div>
+</body>
+</html>
